@@ -1,0 +1,942 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Remo Energy – Sustainable Power for Uganda</title>
+<link href="https://fonts.googleapis.com/css2?family=Sen:wght@400;600;700;800&family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --green:#538A30;--green-dark:#3d6622;--green-light:#6aad3d;
+  --orange:#F9970B;--orange-light:#fbb03b;
+  --blue:#4C749F;--blue-dark:#3a5a80;--blue-light:#6b93bd;
+  --white:#FFFFFF;--off-white:#f7f9f4;
+  --gray-50:#f4f6f0;--gray-100:#e8ede2;--gray-300:#b8c4ae;
+  --gray-500:#7a8f6e;--gray-700:#3d4d35;
+  --dark:#1a2214;--text:#253018;--muted:#5a6e4e;
+  --radius:14px;
+  --shadow:0 4px 24px rgba(26,34,20,.10);
+  --shadow-lg:0 12px 48px rgba(26,34,20,.16)
+}
+html{scroll-behavior:smooth}
+body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--white);color:var(--text);overflow-x:hidden;line-height:1.6}
+img{display:block;max-width:100%}
+a{text-decoration:none;color:inherit}
+
+/* BUTTONS */
+.btn{display:inline-flex;align-items:center;gap:8px;padding:13px 26px;font-family:'Sen',sans-serif;font-size:14px;font-weight:700;border-radius:50px;cursor:pointer;border:none;transition:all .22s ease;letter-spacing:.2px;line-height:1}
+.btn-primary{background:var(--orange);color:var(--white)}
+.btn-primary:hover{background:var(--orange-light);box-shadow:0 8px 28px rgba(249,151,11,.4);transform:translateY(-2px)}
+.btn-secondary{background:var(--green);color:var(--white)}
+.btn-secondary:hover{background:var(--green-light);box-shadow:0 8px 28px rgba(83,138,48,.4);transform:translateY(-2px)}
+.btn-outline{background:transparent;color:var(--white);border:2px solid rgba(255,255,255,.6)}
+.btn-outline:hover{background:rgba(255,255,255,.12);border-color:var(--white)}
+.btn-outline-green{background:transparent;color:var(--green);border:2px solid var(--green)}
+.btn-outline-green:hover{background:var(--green);color:var(--white)}
+.btn-blue{background:var(--blue);color:var(--white)}
+.btn-blue:hover{background:var(--blue-dark);box-shadow:0 8px 28px rgba(76,116,159,.4);transform:translateY(-2px)}
+.btn-lg{padding:16px 36px;font-size:16px}
+.btn-sm{padding:9px 18px;font-size:13px}
+
+/* NAVBAR */
+#navbar{position:fixed;top:0;left:0;right:0;z-index:990;transition:all .3s}
+.nav-top{background:var(--dark);padding:8px 56px;display:flex;justify-content:flex-end;gap:32px;transition:all .3s}
+.nav-top a{font-size:13px;color:rgba(255,255,255,.6);display:flex;align-items:center;gap:6px;transition:color .2s}
+.nav-top a:hover{color:var(--orange)}
+.nav-main{background:rgba(255,255,255,.97);backdrop-filter:blur(20px);border-bottom:1px solid var(--gray-100);padding:0 56px;display:flex;align-items:center;justify-content:space-between;height:72px;box-shadow:0 2px 16px rgba(26,34,20,.06)}
+.nav-logo{display:flex;align-items:center;gap:12px}
+.nav-logo-mark{width:42px;height:42px;background:var(--green);border-radius:10px;display:grid;place-items:center;flex-shrink:0}
+.nav-logo-mark svg{width:24px;height:24px}
+.nav-logo-text{font-family:'Sen',sans-serif;font-size:20px;font-weight:800;color:var(--dark);letter-spacing:-.3px}
+.nav-logo-text span{color:var(--green)}
+.nav-links{display:flex;align-items:center;gap:4px;list-style:none}
+.nav-links a{padding:8px 14px;font-size:14px;font-weight:600;color:var(--muted);border-radius:8px;transition:all .2s;white-space:nowrap}
+.nav-links a:hover,.nav-links a.active{color:var(--green);background:rgba(83,138,48,.07)}
+.nav-ctas{display:flex;align-items:center;gap:10px}
+.hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:6px;background:none;border:none}
+.hamburger span{width:24px;height:2.5px;background:var(--dark);border-radius:2px;transition:all .3s}
+
+/* MOBILE MENU */
+.mobile-menu{position:fixed;top:0;left:0;right:0;bottom:0;z-index:980;background:var(--white);padding:110px 32px 40px;display:none;flex-direction:column;gap:0}
+.mobile-menu.open{display:flex}
+.mobile-menu a{font-family:'Sen',sans-serif;font-size:22px;font-weight:700;color:var(--text);padding:16px 0;border-bottom:1px solid var(--gray-100);display:block;transition:color .2s}
+.mobile-menu a:hover{color:var(--green)}
+.mobile-menu-ctas{display:flex;flex-direction:column;gap:10px;margin-top:28px}
+.mobile-menu-ctas .btn{justify-content:center}
+
+/* HERO */
+#home{position:relative;min-height:100vh;display:flex;align-items:center;overflow:hidden}
+.hero-img{position:absolute;inset:0;z-index:0}
+.hero-img img{width:100%;height:100%;object-fit:cover;object-position:center}
+.hero-overlay{position:absolute;inset:0;z-index:1;background:linear-gradient(105deg,rgba(26,34,20,.82) 0%,rgba(26,34,20,.55) 55%,rgba(76,116,159,.25) 100%)}
+.hero-content{position:relative;z-index:2;padding:160px 56px 100px;max-width:760px}
+.hero-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(249,151,11,.15);border:1px solid rgba(249,151,11,.4);border-radius:50px;padding:6px 16px;margin-bottom:28px}
+.hero-badge-dot{width:7px;height:7px;border-radius:50%;background:var(--orange);animation:pulse-dot 1.6s ease-in-out infinite}
+@keyframes pulse-dot{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(.8)}}
+.hero-badge span{font-size:12px;font-weight:700;color:var(--orange);letter-spacing:.8px;text-transform:uppercase}
+.hero-title{font-family:'Sen',sans-serif;font-size:clamp(52px,7vw,88px);font-weight:800;color:var(--white);line-height:1.0;letter-spacing:-1px;margin-bottom:24px}
+.hero-title .t-green{color:#6aad3d}
+.hero-title .t-orange{color:var(--orange)}
+.hero-sub{font-size:18px;color:rgba(255,255,255,.78);line-height:1.75;max-width:520px;margin-bottom:44px}
+.hero-actions{display:flex;flex-wrap:wrap;gap:14px;margin-bottom:60px}
+.hero-stats{display:flex;gap:0;border-top:1px solid rgba(255,255,255,.15);padding-top:40px}
+.hero-stat{padding-right:40px;margin-right:40px;border-right:1px solid rgba(255,255,255,.15)}
+.hero-stat:last-child{border-right:none;padding-right:0;margin-right:0}
+.hero-stat-num{font-family:'Sen',sans-serif;font-size:38px;font-weight:800;color:var(--orange);line-height:1}
+.hero-stat-label{font-size:13px;color:rgba(255,255,255,.55);margin-top:4px;font-weight:500}
+.hero-scroll{position:absolute;bottom:36px;left:50%;transform:translateX(-50%);z-index:2;display:flex;flex-direction:column;align-items:center;gap:8px;cursor:pointer}
+.hero-scroll span{font-size:11px;color:rgba(255,255,255,.4);letter-spacing:2px;text-transform:uppercase;font-family:'Sen',sans-serif}
+.scroll-arrow{width:1px;height:44px;background:linear-gradient(to bottom,rgba(255,255,255,.4),transparent);animation:scroll-anim 1.6s ease-in-out infinite}
+@keyframes scroll-anim{0%,100%{opacity:.5}50%{opacity:1}}
+
+/* SECTIONS */
+.section-wrap{padding:96px 56px}
+.section-label{font-family:'Sen',sans-serif;font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--orange);margin-bottom:12px;display:flex;align-items:center;gap:8px}
+.section-label::before{content:'';width:28px;height:2px;background:var(--orange);border-radius:2px}
+.section-title{font-family:'Sen',sans-serif;font-size:clamp(36px,4vw,54px);font-weight:800;color:var(--dark);line-height:1.1;letter-spacing:-.5px}
+.section-lead{font-size:17px;color:var(--muted);line-height:1.8;margin-top:16px;max-width:560px}
+.divider{height:1px;background:linear-gradient(90deg,transparent,var(--gray-100) 20%,var(--gray-100) 80%,transparent)}
+
+/* ABOUT */
+#about{background:var(--off-white)}
+.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:72px;align-items:center}
+.about-visual{position:relative}
+.about-main-img{border-radius:20px;overflow:hidden;height:520px;box-shadow:var(--shadow-lg)}
+.about-main-img img{width:100%;height:100%;object-fit:cover}
+.about-float{position:absolute;background:var(--white);border-radius:14px;box-shadow:var(--shadow-lg);border:1px solid var(--gray-100)}
+.about-float-stat{bottom:-28px;left:-28px;padding:22px 28px;min-width:160px}
+.about-float-stat .big{font-family:'Sen',sans-serif;font-size:48px;font-weight:800;color:var(--green);line-height:1}
+.about-float-stat .lbl{font-size:12px;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:.5px;margin-top:4px}
+.about-float-active{top:-20px;right:-20px;padding:14px 20px;display:flex;align-items:center;gap:10px}
+.about-float-active .dot{width:9px;height:9px;border-radius:50%;background:var(--green-light);animation:pulse-dot 1.5s infinite}
+.about-float-active span{font-size:13px;font-weight:700;color:var(--green)}
+.about-text p{font-size:16px;color:var(--muted);line-height:1.85;margin-top:20px}
+.about-text p strong{color:var(--text);font-weight:600}
+.vm-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:32px}
+.vm-card{background:var(--white);border-radius:var(--radius);padding:22px;border:1px solid var(--gray-100);border-left:4px solid var(--green)}
+.vm-card.blue{border-left-color:var(--blue)}
+.vm-card h4{font-family:'Sen',sans-serif;font-size:13px;font-weight:800;color:var(--dark);text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px}
+.vm-card p{font-size:13px;color:var(--muted);line-height:1.6}
+.chips{display:flex;gap:10px;flex-wrap:wrap;margin-top:28px}
+.chip{display:flex;align-items:center;gap:7px;padding:9px 15px;background:var(--white);border:1px solid var(--gray-100);border-radius:50px;font-size:13px;font-weight:600;color:var(--text)}
+
+/* SERVICES */
+#services{background:var(--white)}
+.services-header{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:56px;flex-wrap:wrap;gap:24px}
+.services-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.svc-card{background:var(--white);border:1px solid var(--gray-100);border-radius:20px;overflow:hidden;transition:all .25s ease;box-shadow:var(--shadow)}
+.svc-card:hover{transform:translateY(-6px);box-shadow:var(--shadow-lg);border-color:var(--gray-300)}
+.svc-img{height:200px;overflow:hidden;position:relative}
+.svc-img img{width:100%;height:100%;object-fit:cover;transition:transform .4s ease}
+.svc-card:hover .svc-img img{transform:scale(1.05)}
+.svc-overlay{position:absolute;inset:0;background:linear-gradient(to bottom,transparent 50%,rgba(26,34,20,.5))}
+.svc-num{position:absolute;top:14px;left:14px;font-family:'Sen',sans-serif;font-size:11px;font-weight:700;color:var(--white);background:rgba(26,34,20,.6);backdrop-filter:blur(8px);padding:4px 10px;border-radius:50px;letter-spacing:1px}
+.svc-body{padding:24px}
+.svc-icon{width:44px;height:44px;border-radius:10px;display:grid;place-items:center;font-size:20px;margin-bottom:14px}
+.svc-icon.g{background:rgba(83,138,48,.1)}
+.svc-icon.o{background:rgba(249,151,11,.1)}
+.svc-icon.b{background:rgba(76,116,159,.1)}
+.svc-body h3{font-family:'Sen',sans-serif;font-size:17px;font-weight:800;color:var(--dark);margin-bottom:10px;line-height:1.3}
+.svc-body p{font-size:14px;color:var(--muted);line-height:1.7}
+.svc-tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:14px}
+.svc-tag{padding:4px 10px;border-radius:50px;font-size:11px;font-weight:700}
+.svc-tag.g{background:rgba(83,138,48,.1);color:var(--green)}
+.svc-tag.o{background:rgba(249,151,11,.1);color:var(--orange)}
+.svc-tag.b{background:rgba(76,116,159,.1);color:var(--blue)}
+.svc-cta{grid-column:span 3;background:linear-gradient(120deg,var(--green) 0%,var(--green-dark) 100%);border-radius:20px;padding:48px;display:flex;align-items:center;justify-content:space-between;gap:32px}
+.svc-cta h3{font-family:'Sen',sans-serif;font-size:28px;font-weight:800;color:var(--white);margin-bottom:8px}
+.svc-cta p{font-size:15px;color:rgba(255,255,255,.75);max-width:500px}
+
+/* SAFETY */
+#safety{background:var(--off-white)}
+.safety-grid{display:grid;grid-template-columns:1fr 1fr;gap:72px;align-items:center;margin-top:56px}
+.safety-img{border-radius:20px;overflow:hidden;height:480px;box-shadow:var(--shadow-lg)}
+.safety-img img{width:100%;height:100%;object-fit:cover}
+.safety-items{display:flex;flex-direction:column;gap:4px}
+.safety-item{display:flex;gap:20px;align-items:flex-start;padding:20px;border-radius:14px;transition:all .2s;border:1px solid transparent}
+.safety-item:hover{background:var(--white);border-color:var(--gray-100);box-shadow:var(--shadow)}
+.safety-icon{width:52px;height:52px;border-radius:12px;display:grid;place-items:center;font-size:24px;flex-shrink:0}
+.safety-icon.g{background:rgba(83,138,48,.1)}
+.safety-icon.o{background:rgba(249,151,11,.1)}
+.safety-icon.b{background:rgba(76,116,159,.1)}
+.safety-item h4{font-family:'Sen',sans-serif;font-size:16px;font-weight:800;color:var(--dark);margin-bottom:6px}
+.safety-item p{font-size:14px;color:var(--muted);line-height:1.65}
+.safety-note{background:var(--white);border-radius:var(--radius);padding:22px;border:1px solid var(--gray-100);margin-bottom:8px;font-size:14px;color:var(--muted);line-height:1.75}
+.safety-note strong{color:var(--text);font-weight:600}
+
+/* WHY */
+#why{background:var(--dark);padding:96px 56px}
+.why-grid{display:grid;grid-template-columns:1fr 1fr;gap:72px;align-items:center}
+.why-label{font-family:'Sen',sans-serif;font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--orange);margin-bottom:12px;display:flex;align-items:center;gap:8px}
+.why-label::before{content:'';width:28px;height:2px;background:var(--orange);border-radius:2px}
+.why-title{font-family:'Sen',sans-serif;font-size:clamp(36px,4vw,54px);font-weight:800;color:var(--white);line-height:1.1;letter-spacing:-.5px;margin-bottom:16px}
+.why-lead{font-size:16px;color:rgba(255,255,255,.55);line-height:1.8;max-width:460px}
+.why-reasons{display:flex;flex-direction:column;gap:4px;margin-top:36px}
+.why-item{display:flex;gap:18px;align-items:flex-start;padding:20px;border-radius:14px;border:1px solid rgba(255,255,255,.06);transition:all .22s}
+.why-item:hover{background:rgba(255,255,255,.04);border-color:rgba(249,151,11,.2)}
+.why-num{font-family:'Sen',sans-serif;font-size:12px;font-weight:700;color:var(--orange);min-width:32px;padding-top:2px;letter-spacing:.5px}
+.why-item h4{font-family:'Sen',sans-serif;font-size:15px;font-weight:800;color:var(--white);margin-bottom:4px}
+.why-item p{font-size:13px;color:rgba(255,255,255,.5);line-height:1.65}
+.why-visual{position:relative}
+.why-img-wrap{border-radius:20px;overflow:hidden;height:520px;box-shadow:0 24px 64px rgba(0,0,0,.4)}
+.why-img-wrap img{width:100%;height:100%;object-fit:cover}
+.why-float{position:absolute;top:24px;right:24px;background:rgba(255,255,255,.07);backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,.12);border-radius:14px;padding:20px 24px;display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.why-metric-num{font-family:'Sen',sans-serif;font-size:24px;font-weight:800;color:var(--orange);line-height:1}
+.why-metric-label{font-size:11px;color:rgba(255,255,255,.45);margin-top:3px;font-weight:500}
+
+/* CONTACT */
+#contact{background:var(--white)}
+.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:72px;align-items:start;margin-top:56px}
+.contact-items{display:flex;flex-direction:column;gap:14px;margin-top:28px}
+.contact-item{display:flex;gap:16px;align-items:flex-start;padding:20px;background:var(--off-white);border-radius:14px;border:1px solid var(--gray-100)}
+.contact-item-icon{width:44px;height:44px;border-radius:10px;display:grid;place-items:center;font-size:20px;flex-shrink:0}
+.contact-item-icon.g{background:rgba(83,138,48,.12)}
+.contact-item-icon.o{background:rgba(249,151,11,.12)}
+.contact-item-icon.b{background:rgba(76,116,159,.12)}
+.contact-item h5{font-family:'Sen',sans-serif;font-size:12px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px}
+.contact-item a,.contact-item p{font-size:15px;color:var(--text);font-weight:500}
+.contact-item a:hover{color:var(--green)}
+.social-row{display:flex;gap:10px;margin-top:24px}
+.social-btn{width:42px;height:42px;border-radius:10px;background:var(--off-white);border:1px solid var(--gray-100);display:grid;place-items:center;font-size:14px;font-weight:700;font-family:'Sen',sans-serif;transition:all .2s;color:var(--muted)}
+.social-btn:hover{background:var(--green);border-color:var(--green);color:var(--white);transform:translateY(-2px)}
+.hours-note{margin-top:28px;padding:22px;background:rgba(83,138,48,.06);border:1px solid rgba(83,138,48,.15);border-radius:14px;font-size:14px;color:var(--muted);line-height:1.7}
+.hours-note strong{color:var(--text);font-weight:600}
+.contact-form-box{background:var(--off-white);border-radius:20px;padding:36px;border:1px solid var(--gray-100)}
+.contact-form-box h3{font-family:'Sen',sans-serif;font-size:22px;font-weight:800;color:var(--dark);margin-bottom:4px}
+.contact-form-box .fsub{font-size:14px;color:var(--muted);margin-bottom:24px}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.form-g{margin-bottom:16px}
+.form-g label{display:block;font-size:12px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px}
+.form-g input,.form-g select,.form-g textarea{width:100%;background:var(--white);border:1.5px solid var(--gray-100);border-radius:10px;padding:12px 16px;color:var(--text);font-family:'Plus Jakarta Sans',sans-serif;font-size:14px;outline:none;transition:border-color .2s;resize:vertical}
+.form-g input:focus,.form-g select:focus,.form-g textarea:focus{border-color:var(--green)}
+.form-g input::placeholder,.form-g textarea::placeholder{color:var(--gray-300)}
+.form-submit{width:100%;padding:15px;background:var(--orange);color:var(--white);border:none;border-radius:10px;font-family:'Sen',sans-serif;font-size:15px;font-weight:800;cursor:pointer;transition:all .22s;margin-top:4px}
+.form-submit:hover{background:var(--orange-light);box-shadow:0 8px 28px rgba(249,151,11,.4);transform:translateY(-1px)}
+.form-success{display:none;text-align:center;padding:40px 16px}
+.form-success .s-icon{font-size:52px;margin-bottom:16px}
+.form-success h3{font-family:'Sen',sans-serif;font-size:26px;font-weight:800;color:var(--green)}
+.form-success p{color:var(--muted);margin-top:8px;font-size:15px}
+
+/* CTA BANNER */
+.cta-banner{background:linear-gradient(110deg,var(--green) 0%,var(--green-dark) 50%,var(--blue-dark) 100%);padding:80px 56px;text-align:center;position:relative;overflow:hidden}
+.cta-banner::before{content:'';position:absolute;inset:0;background:url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='30' cy='30' r='2' fill='%23ffffff' fill-opacity='0.04'/%3E%3C/svg%3E")}
+.cta-inner{position:relative;z-index:1;max-width:640px;margin:0 auto}
+.cta-inner h2{font-family:'Sen',sans-serif;font-size:clamp(36px,4vw,52px);font-weight:800;color:var(--white);line-height:1.1;margin-bottom:14px;letter-spacing:-.5px}
+.cta-inner p{font-size:17px;color:rgba(255,255,255,.75);margin-bottom:36px;line-height:1.7}
+.cta-actions{display:flex;justify-content:center;flex-wrap:wrap;gap:14px}
+
+/* FOOTER */
+footer{background:var(--dark);padding:72px 56px 36px}
+.footer-grid{display:grid;grid-template-columns:2.5fr 1fr 1fr 1fr;gap:56px;margin-bottom:56px}
+.footer-desc{font-size:14px;color:rgba(255,255,255,.4);line-height:1.75;margin-top:18px;max-width:280px}
+.footer-links{display:flex;flex-direction:column;gap:8px;margin-top:16px}
+.footer-links a{font-size:14px;color:rgba(255,255,255,.4);transition:color .2s}
+.footer-links a:hover{color:var(--orange)}
+.footer-col h5{font-family:'Sen',sans-serif;font-size:12px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,.3);margin-bottom:20px}
+.footer-col ul{list-style:none;display:flex;flex-direction:column;gap:10px}
+.footer-col ul a,.footer-col ul button{font-size:14px;color:rgba(255,255,255,.5);transition:color .2s;background:none;border:none;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;text-align:left;padding:0}
+.footer-col ul a:hover,.footer-col ul button:hover{color:var(--orange)}
+.footer-bottom{border-top:1px solid rgba(255,255,255,.08);padding-top:28px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px}
+.footer-bottom p{font-size:13px;color:rgba(255,255,255,.3)}
+.footer-bottom span{color:var(--orange)}
+.footer-socials{display:flex;gap:10px}
+.footer-social{width:36px;height:36px;border-radius:8px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);display:grid;place-items:center;font-size:13px;color:rgba(255,255,255,.4);text-decoration:none;transition:all .2s;font-weight:700;font-family:'Sen',sans-serif}
+.footer-social:hover{background:var(--orange);border-color:var(--orange);color:var(--white);transform:translateY(-2px)}
+
+/* MODAL */
+.modal-overlay{position:fixed;inset:0;z-index:9999;background:rgba(26,34,20,.65);backdrop-filter:blur(10px);display:flex;align-items:center;justify-content:center;padding:20px;opacity:0;pointer-events:none;transition:opacity .25s}
+.modal-overlay.open{opacity:1;pointer-events:all}
+.modal-box{background:var(--white);border-radius:22px;padding:44px;max-width:540px;width:100%;position:relative;transform:scale(.96) translateY(16px);transition:transform .25s;max-height:90vh;overflow-y:auto}
+.modal-overlay.open .modal-box{transform:scale(1) translateY(0)}
+.modal-close{position:absolute;top:18px;right:18px;width:34px;height:34px;border-radius:8px;background:var(--gray-50);border:1px solid var(--gray-100);color:var(--muted);cursor:pointer;font-size:18px;display:grid;place-items:center;transition:all .2s;line-height:1}
+.modal-close:hover{background:var(--gray-100);color:var(--dark)}
+.modal-box h2{font-family:'Sen',sans-serif;font-size:28px;font-weight:800;color:var(--dark);margin-bottom:6px}
+.modal-sub{font-size:14px;color:var(--muted);margin-bottom:28px}
+
+/* FADE IN */
+.fade-in{opacity:0;transform:translateY(28px);transition:opacity .6s ease,transform .6s ease}
+.fade-in.visible{opacity:1;transform:translateY(0)}
+
+/* RESPONSIVE */
+@media(max-width:1100px){
+  .services-grid{grid-template-columns:1fr 1fr}
+  .svc-cta{grid-column:span 2}
+  .footer-grid{grid-template-columns:1fr 1fr;gap:40px}
+}
+@media(max-width:900px){
+  .nav-top{padding:8px 28px}
+  .nav-main{padding:0 28px}
+  .nav-links,.nav-ctas .btn-outline-green{display:none}
+  .hamburger{display:flex}
+  .section-wrap{padding:72px 28px}
+  #why{padding:72px 28px}
+  .cta-banner{padding:64px 28px}
+  footer{padding:56px 28px 28px}
+  .hero-content{padding:140px 28px 80px}
+  .about-grid,.contact-grid,.safety-grid,.why-grid{grid-template-columns:1fr;gap:40px}
+  .about-float-stat{bottom:-16px;left:16px}
+  .about-float-active{top:-16px;right:16px}
+  .hero-stats{flex-wrap:wrap;gap:24px}
+  .hero-stat{border-right:none;padding:0;margin:0}
+}
+@media(max-width:640px){
+  .services-grid{grid-template-columns:1fr}
+  .svc-cta{grid-column:span 1;flex-direction:column;text-align:center}
+  .footer-grid{grid-template-columns:1fr}
+  .footer-bottom{flex-direction:column;text-align:center}
+  .form-row{grid-template-columns:1fr}
+  .vm-grid{grid-template-columns:1fr}
+  .hero-actions{flex-direction:column}
+  .hero-actions .btn{justify-content:center}
+  .why-float{display:none}
+  .cta-actions{flex-direction:column;align-items:center}
+}
+</style>
+</head>
+<body>
+
+<!-- ═══ MODALS ═══════════════════════════════════════════════════ -->
+
+<!-- Quote Modal -->
+<div class="modal-overlay" id="quoteModal">
+  <div class="modal-box">
+    <button class="modal-close" id="closeQuoteModal">✕</button>
+    <div id="qFormWrap">
+      <h2>Get a <span style="color:var(--orange)">Free Quote</span></h2>
+      <p class="modal-sub">Fill in your details and we'll respond within 24 hours with a personalised proposal.</p>
+      <div class="form-row">
+        <div class="form-g"><label>First Name</label><input type="text" placeholder="e.g. John"/></div>
+        <div class="form-g"><label>Last Name</label><input type="text" placeholder="e.g. Mukasa"/></div>
+      </div>
+      <div class="form-row">
+        <div class="form-g"><label>Phone</label><input type="tel" placeholder="+256 7XX XXX XXX"/></div>
+        <div class="form-g"><label>Email</label><input type="email" placeholder="you@example.com"/></div>
+      </div>
+      <div class="form-g"><label>Service of Interest</label>
+        <select>
+          <option value="">Select a service…</option>
+          <option>Solar Home System Installation</option>
+          <option>Productive Use of Energy (PUE) System</option>
+          <option>Commercial &amp; Industrial Installation</option>
+          <option>Solar Water Pumping Solution</option>
+          <option>Residential / Commercial Energy Backup</option>
+          <option>Street Lighting Solution</option>
+          <option>Not Sure – Need Expert Advice</option>
+        </select>
+      </div>
+      <div class="form-g"><label>Your Location</label><input type="text" placeholder="e.g. Kampala, Entebbe, Jinja…"/></div>
+      <div class="form-g"><label>Additional Notes</label><textarea rows="3" placeholder="Any details about your project…"></textarea></div>
+      <button class="form-submit" id="qSubmitBtn">☀️ Submit Quote Request</button>
+    </div>
+    <div class="form-success" id="qSuccess">
+      <div class="s-icon">🌟</div>
+      <h3>Quote Request Sent!</h3>
+      <p>Our team will contact you within 24 hours with a personalised proposal. Thank you!</p>
+      <button class="btn btn-secondary" style="margin-top:24px" id="qCloseSuccessBtn">Close</button>
+    </div>
+  </div>
+</div>
+
+<!-- Contact Modal -->
+<div class="modal-overlay" id="contactModal">
+  <div class="modal-box">
+    <button class="modal-close" id="closeContactModal">✕</button>
+    <div id="cFormWrap">
+      <h2>Send a <span style="color:var(--green)">Message</span></h2>
+      <p class="modal-sub">We usually respond within a few hours on business days.</p>
+      <div class="form-g"><label>Full Name</label><input type="text" placeholder="Your name"/></div>
+      <div class="form-row">
+        <div class="form-g"><label>Phone</label><input type="tel" placeholder="+256 7XX XXX XXX"/></div>
+        <div class="form-g"><label>Email</label><input type="email" placeholder="you@example.com"/></div>
+      </div>
+      <div class="form-g"><label>Subject</label><input type="text" placeholder="What is this about?"/></div>
+      <div class="form-g"><label>Message</label><textarea rows="5" placeholder="Your message…"></textarea></div>
+      <button class="form-submit" style="background:var(--green)" id="cSubmitBtn">✉️ Send Message</button>
+    </div>
+    <div class="form-success" id="cSuccess">
+      <div class="s-icon">✅</div>
+      <h3 style="color:var(--green)">Message Sent!</h3>
+      <p>We've received your message and will be in touch shortly. Thank you!</p>
+      <button class="btn btn-secondary" style="margin-top:24px" id="cCloseSuccessBtn">Close</button>
+    </div>
+  </div>
+</div>
+
+<!-- Mobile Menu -->
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#home" class="mm-link">Home</a>
+  <a href="#about" class="mm-link">About Us</a>
+  <a href="#services" class="mm-link">Services</a>
+  <a href="#safety" class="mm-link">Safety</a>
+  <a href="#contact" class="mm-link">Contact</a>
+  <div class="mobile-menu-ctas">
+    <button class="btn btn-primary btn-lg" id="mobileQuoteBtn">☀️ Get a Free Quote</button>
+    <a href="tel:256700601202" class="btn btn-outline-green btn-lg">📞 Call Us Now</a>
+  </div>
+</div>
+
+<!-- ═══ NAVBAR ═══════════════════════════════════════════════════ -->
+<nav id="navbar">
+  <div class="nav-top">
+    <a href="tel:256700601202">📞 +256 700 601 202</a>
+    <a href="mailto:info@remoenergy.co.ug">✉️ info@remoenergy.co.ug</a>
+  </div>
+  <div class="nav-main">
+    <a href="#home" class="nav-logo">
+      <div class="nav-logo-mark">
+        <svg viewBox="0 0 24 24" fill="none">
+          <circle cx="12" cy="12" r="5" fill="#fff"/>
+          <path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.22 4.22l2.12 2.12M17.66 17.66l2.12 2.12M4.22 19.78l2.12-2.12M17.66 6.34l2.12-2.12" stroke="#fff" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <span class="nav-logo-text">Remo<span>Energy</span></span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="#home">Home</a></li>
+      <li><a href="#about">About Us</a></li>
+      <li><a href="#services">Services</a></li>
+      <li><a href="#safety">Safety</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <div class="nav-ctas">
+      <a href="tel:256700601202" class="btn btn-outline-green btn-sm">📞 Call Us</a>
+      <button class="btn btn-primary btn-sm" id="navQuoteBtn">☀️ Free Quote</button>
+    </div>
+    <button class="hamburger" id="hamburgerBtn" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- ═══ HERO ════════════════════════════════════════════════════ -->
+<section id="home">
+  <div class="hero-img">
+    <img src="https://images.unsplash.com/photo-1509391366360-2e959784a276?w=1920&q=85&auto=format&fit=crop" alt="Solar energy Uganda" loading="eager"/>
+  </div>
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <div class="hero-badge">
+      <span class="hero-badge-dot"></span>
+      <span>Uganda's Renewable Energy Partner · Since 2023</span>
+    </div>
+    <h1 class="hero-title">
+      Power<br>
+      <span class="t-green">Uganda's</span><br>
+      <span class="t-orange">Future.</span>
+    </h1>
+    <p class="hero-sub">Reliable, cost-effective solar energy for homes, businesses, and communities. Clean power delivered and maintained by Uganda's most passionate energy team.</p>
+    <div class="hero-actions">
+      <button class="btn btn-primary btn-lg" id="heroQuoteBtn">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="5" fill="currentColor"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.22 4.22l2.12 2.12M17.66 17.66l2.12 2.12M4.22 19.78l2.12-2.12M17.66 6.34l2.12-2.12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        Get a Free Quote
+      </button>
+      <a href="#services" class="btn btn-outline btn-lg">Explore Services →</a>
+    </div>
+    <div class="hero-stats">
+      <div class="hero-stat"><div class="hero-stat-num">100+</div><div class="hero-stat-label">Installations</div></div>
+      <div class="hero-stat"><div class="hero-stat-num">6</div><div class="hero-stat-label">Service Lines</div></div>
+      <div class="hero-stat"><div class="hero-stat-num">100%</div><div class="hero-stat-label">Clean Energy</div></div>
+    </div>
+  </div>
+  <div class="hero-scroll" id="heroScrollBtn">
+    <span>Scroll</span>
+    <div class="scroll-arrow"></div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ═══ ABOUT ════════════════════════════════════════════════════ -->
+<section id="about" class="section-wrap">
+  <div class="about-grid">
+    <div class="about-visual fade-in">
+      <div class="about-main-img">
+        <img src="https://images.unsplash.com/photo-1497440001374-f26997328c1b?w=1200&q=80&auto=format&fit=crop" alt="Remo Energy solar installation" loading="lazy"/>
+      </div>
+      <div class="about-float about-float-stat">
+        <div class="big">2023</div>
+        <div class="lbl">Founded · Kampala</div>
+      </div>
+      <div class="about-float about-float-active">
+        <span class="dot"></span>
+        <span>Actively Growing</span>
+      </div>
+    </div>
+    <div class="about-text fade-in">
+      <p class="section-label">About Remo Energy</p>
+      <h2 class="section-title">Your Trusted <span style="color:var(--green)">Energy</span> Partner</h2>
+      <p>Founded in <strong>2023 in Kampala, Uganda</strong>, Remo Energy was born out of a vision to transform the energy landscape in Uganda and beyond. Our mission is to deliver sustainable, reliable, and affordable renewable energy solutions that empower communities and drive economic growth.</p>
+      <p>We understand the critical role energy plays in every society — and we're committed to making <strong>clean energy accessible to everyone</strong>, particularly in regions where traditional power is unreliable or expensive.</p>
+      <div class="vm-grid">
+        <div class="vm-card">
+          <h4>Our Vision</h4>
+          <p>To be the leading renewable energy provider in Uganda, empowering communities with the power of the sun.</p>
+        </div>
+        <div class="vm-card blue">
+          <h4>Our Mission</h4>
+          <p>Delivering innovative, customised, and safe renewable energy solutions that meet the diverse needs of every customer.</p>
+        </div>
+      </div>
+      <div class="chips">
+        <div class="chip">🌱 Innovation</div>
+        <div class="chip">👥 Customer-Centric</div>
+        <div class="chip">🛡️ Safety First</div>
+        <div class="chip">⚡ Reliability</div>
+      </div>
+      <div style="margin-top:32px;display:flex;gap:12px;flex-wrap:wrap">
+        <button class="btn btn-secondary" id="aboutContactBtn">Talk to Our Team →</button>
+        <a href="#services" class="btn btn-outline-green">View Services</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ═══ SERVICES ═════════════════════════════════════════════════ -->
+<section id="services" class="section-wrap">
+  <div class="services-header">
+    <div class="fade-in">
+      <p class="section-label">What We Do</p>
+      <h2 class="section-title">Our <span style="color:var(--green)">Services</span></h2>
+    </div>
+    <button class="btn btn-primary fade-in" id="servicesQuoteBtn">Request a Service →</button>
+  </div>
+  <div class="services-grid">
+
+    <div class="svc-card fade-in">
+      <div class="svc-img">
+        <img src="https://images.unsplash.com/photo-1509390144018-eedef7cfd7b0?w=800&q=80&auto=format&fit=crop" alt="Solar home system" loading="lazy"/>
+        <div class="svc-overlay"></div><span class="svc-num">01</span>
+      </div>
+      <div class="svc-body">
+        <div class="svc-icon g">☀️</div>
+        <h3>Solar Home System Installations</h3>
+        <p>Reliable, efficient solar systems tailored to your household. Consistent power, reduced costs, and minimal environmental impact — with full aftersales support.</p>
+        <div class="svc-tags"><span class="svc-tag g">Sustainability</span><span class="svc-tag g">Efficiency</span></div>
+      </div>
+    </div>
+
+    <div class="svc-card fade-in">
+      <div class="svc-img">
+        <img src="https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?w=800&q=80&auto=format&fit=crop" alt="PUE energy system" loading="lazy"/>
+        <div class="svc-overlay"></div><span class="svc-num">02</span>
+      </div>
+      <div class="svc-body">
+        <div class="svc-icon o">⚙️</div>
+        <h3>Productive Use of Energy (PUE) Systems</h3>
+        <p>Boost your business productivity by powering essential equipment and machinery — maximising output, reducing costs, and increasing profitability.</p>
+        <div class="svc-tags"><span class="svc-tag o">Productivity</span><span class="svc-tag o">Business Growth</span></div>
+      </div>
+    </div>
+
+    <div class="svc-card fade-in">
+      <div class="svc-img">
+        <img src="https://images.unsplash.com/photo-1581092918056-0c4c3acd3789?w=800&q=80&auto=format&fit=crop" alt="Commercial industrial solar" loading="lazy"/>
+        <div class="svc-overlay"></div><span class="svc-num">03</span>
+      </div>
+      <div class="svc-body">
+        <div class="svc-icon b">🏭</div>
+        <h3>Commercial &amp; Industrial Installations</h3>
+        <p>Customised C&amp;I solar systems that significantly reduce operational costs while minimising your environmental footprint across any facility type.</p>
+        <div class="svc-tags"><span class="svc-tag b">Cost Savings</span><span class="svc-tag b">Scalable</span></div>
+      </div>
+    </div>
+
+    <div class="svc-card fade-in">
+      <div class="svc-img">
+        <img src="https://images.unsplash.com/photo-1544027993-37dbfe43562a?w=800&q=80&auto=format&fit=crop" alt="Solar water pumping" loading="lazy"/>
+        <div class="svc-overlay"></div><span class="svc-num">04</span>
+      </div>
+      <div class="svc-body">
+        <div class="svc-icon g">💧</div>
+        <h3>Solar Water Pumping Solutions</h3>
+        <p>Efficient solar-powered water pumping for agriculture, livestock, and communities — reliable in even the most remote areas with no grid access.</p>
+        <div class="svc-tags"><span class="svc-tag g">Agricultural</span><span class="svc-tag g">Remote Areas</span></div>
+      </div>
+    </div>
+
+    <div class="svc-card fade-in">
+      <div class="svc-img">
+        <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&q=80&auto=format&fit=crop" alt="Energy backup solution" loading="lazy"/>
+        <div class="svc-overlay"></div><span class="svc-num">05</span>
+      </div>
+      <div class="svc-body">
+        <div class="svc-icon o">🔋</div>
+        <h3>Residential &amp; Commercial Backup</h3>
+        <p>Never lose power. Our backup systems automatically engage during outages, protecting appliances and keeping operations running smoothly.</p>
+        <div class="svc-tags"><span class="svc-tag o">Reliability</span><span class="svc-tag o">Peace of Mind</span></div>
+      </div>
+    </div>
+
+    <div class="svc-card fade-in">
+      <div class="svc-img">
+        <img src="https://images.unsplash.com/photo-1465447142348-e9952c393450?w=800&q=80&auto=format&fit=crop" alt="Street lighting" loading="lazy"/>
+        <div class="svc-overlay"></div><span class="svc-num">06</span>
+      </div>
+      <div class="svc-body">
+        <div class="svc-icon b">💡</div>
+        <h3>Street Lighting Solutions</h3>
+        <p>Solar-powered lighting for streets and public spaces — enhancing safety in communities, even without grid access, at zero ongoing energy cost.</p>
+        <div class="svc-tags"><span class="svc-tag b">Public Safety</span><span class="svc-tag b">Eco-Friendly</span></div>
+      </div>
+    </div>
+
+    <div class="svc-cta fade-in">
+      <div>
+        <h3>Need a Specific Solution?</h3>
+        <p>Every energy need is unique. Let our expert team assess your requirements and design a system built precisely for you — completely free of charge.</p>
+      </div>
+      <button class="btn btn-primary btn-lg" style="white-space:nowrap;flex-shrink:0" id="svcCtaBtn">Free Consultation →</button>
+    </div>
+
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ═══ SAFETY ════════════════════════════════════════════════════ -->
+<section id="safety" class="section-wrap">
+  <div class="fade-in">
+    <p class="section-label">Our Commitment</p>
+    <h2 class="section-title">Safety is Our <span style="color:var(--orange)">Top Priority</span></h2>
+    <p class="section-lead">From design to completion and long-term support, safety underpins everything we do at Remo Energy.</p>
+  </div>
+  <div class="safety-grid">
+    <div class="safety-img fade-in">
+      <img src="https://images.unsplash.com/photo-1611348586804-61bf6c080437?w=1200&q=80&auto=format&fit=crop" alt="Solar safety and installation" loading="lazy"/>
+    </div>
+    <div class="fade-in">
+      <div class="safety-note"><p><strong>Our technical team</strong> is dedicated to ensuring every installation meets the highest safety standards. We prioritise the well-being of our customers, employees, and communities by rigorously adhering to industry best practices and implementing the latest safety protocols — whether it's a residential system, commercial installation, or any of our energy solutions.</p></div>
+      <div class="safety-items">
+        <div class="safety-item">
+          <div class="safety-icon g">🔬</div>
+          <div>
+            <h4>Rigorous Testing</h4>
+            <p>Every product and installation is thoroughly tested for safety, performance, and compliance before handover to the customer.</p>
+          </div>
+        </div>
+        <div class="safety-item">
+          <div class="safety-icon o">🎓</div>
+          <div>
+            <h4>Ongoing Training</h4>
+            <p>Our team undergoes continuous training to stay current on the latest safety protocols, technologies, and regulatory requirements.</p>
+          </div>
+        </div>
+        <div class="safety-item">
+          <div class="safety-icon b">👩‍💼</div>
+          <div>
+            <h4>Customer Education</h4>
+            <p>We educate every client on safe operation and maintenance of their systems — ensuring long-term performance and peace of mind.</p>
+          </div>
+        </div>
+      </div>
+      <div style="margin-top:24px">
+        <button class="btn btn-secondary" id="safetyContactBtn">Ask About Our Safety Standards →</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ═══ WHY CHOOSE US ════════════════════════════════════════════ -->
+<section id="why">
+  <div class="why-grid">
+    <div class="fade-in">
+      <p class="why-label">Why Remo Energy</p>
+      <h2 class="why-title">Built on <span style="color:var(--orange)">Trust,</span><br>Driven by <span style="color:#6aad3d">Results.</span></h2>
+      <p class="why-lead">We're not just an energy company — we're your lifetime energy partner, always on call to address every concern.</p>
+      <div class="why-reasons">
+        <div class="why-item"><span class="why-num">01</span><div><h4>Top-Notch Service</h4><p>Unmatched installations with comprehensive aftersales support. We're with you long after the panels are up.</p></div></div>
+        <div class="why-item"><span class="why-num">02</span><div><h4>Innovative Young Team</h4><p>A passionate team combining cutting-edge solutions with deep local knowledge of Uganda's energy landscape.</p></div></div>
+        <div class="why-item"><span class="why-num">03</span><div><h4>Customised Solutions</h4><p>Every system is designed around your specific energy needs, location, and budget — nothing off-the-shelf.</p></div></div>
+        <div class="why-item"><span class="why-num">04</span><div><h4>Lifetime Partnership</h4><p>We provide comfort and peace of mind — you've made a wise energy investment and we'll protect it.</p></div></div>
+      </div>
+    </div>
+    <div class="why-visual fade-in">
+      <div class="why-img-wrap">
+        <img src="https://images.unsplash.com/photo-1559302504-64aae6ca6b6d?w=1200&q=80&auto=format&fit=crop" alt="Uganda solar energy" loading="lazy"/>
+      </div>
+      <div class="why-float">
+        <div><div class="why-metric-num">24/7</div><div class="why-metric-label">Support</div></div>
+        <div><div class="why-metric-num">0%</div><div class="why-metric-label">Emissions</div></div>
+        <div><div class="why-metric-num">100%</div><div class="why-metric-label">Renewable</div></div>
+        <div><div class="why-metric-num">2023</div><div class="why-metric-label">Founded</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ═══ CONTACT ══════════════════════════════════════════════════ -->
+<section id="contact" class="section-wrap">
+  <div class="fade-in">
+    <p class="section-label">Get In Touch</p>
+    <h2 class="section-title">Let's <span style="color:var(--blue)">Connect</span></h2>
+    <p class="section-lead">Have a question or ready to get started? Our team is happy to help — reach out and we'll walk with you every step of the way.</p>
+  </div>
+  <div class="contact-grid">
+    <div class="fade-in">
+      <div class="contact-items">
+        <div class="contact-item">
+          <div class="contact-item-icon g">📞</div>
+          <div><h5>Phone</h5><a href="tel:256700601202">+256 700 601 202</a></div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-item-icon o">✉️</div>
+          <div><h5>Email</h5><a href="mailto:info@remoenergy.co.ug">info@remoenergy.co.ug</a></div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-item-icon b">📍</div>
+          <div><h5>Address</h5><p>Plot 153, Kira Road, Kamwokya<br>Kampala, Uganda</p></div>
+        </div>
+      </div>
+      <div class="social-row">
+        <a href="https://facebook.com" target="_blank" class="social-btn">f</a>
+        <a href="https://instagram.com" target="_blank" class="social-btn">ig</a>
+        <a href="https://linkedin.com" target="_blank" class="social-btn">in</a>
+      </div>
+      <div class="hours-note"><p><strong>Office Hours:</strong> Monday – Friday, 8:00 AM – 6:00 PM EAT<br>Weekend consultations available by appointment.</p></div>
+    </div>
+    <div class="contact-form-box fade-in">
+      <div id="cpFormWrap">
+        <h3>Send Us a Message</h3>
+        <p class="fsub">We usually respond within a few hours on business days.</p>
+        <div class="form-row">
+          <div class="form-g"><label>First Name</label><input type="text" placeholder="John"/></div>
+          <div class="form-g"><label>Last Name</label><input type="text" placeholder="Mukasa"/></div>
+        </div>
+        <div class="form-g"><label>Email or Phone</label><input type="text" placeholder="How should we reach you?"/></div>
+        <div class="form-g"><label>Subject</label><input type="text" placeholder="What is this about?"/></div>
+        <div class="form-g"><label>Message</label><textarea rows="5" placeholder="Your message…"></textarea></div>
+        <button class="form-submit" id="cpSubmitBtn">✉️ Send Message</button>
+      </div>
+      <div class="form-success" id="cpSuccess">
+        <div class="s-icon">✅</div>
+        <h3 style="color:var(--green)">Message Sent!</h3>
+        <p>Thank you! We'll be in touch with you shortly.</p>
+        <button class="btn btn-secondary" style="margin-top:24px" id="cpResetBtn">Send Another</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ CTA BANNER ═══════════════════════════════════════════════ -->
+<div class="cta-banner">
+  <div class="cta-inner">
+    <h2>Discover How Remo Energy Can Power Your Life.</h2>
+    <p>Join hundreds of Ugandan homes and businesses already enjoying clean, reliable, affordable solar energy. Let's build your energy future today.</p>
+    <div class="cta-actions">
+      <button class="btn btn-primary btn-lg" id="ctaBannerBtn">☀️ Get a Free Quote Today</button>
+      <a href="tel:256700601202" class="btn btn-outline btn-lg">📞 Call +256 700 601 202</a>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ FOOTER ════════════════════════════════════════════════════ -->
+<footer>
+  <div class="footer-grid">
+    <div>
+      <a href="#home" class="nav-logo" style="display:inline-flex">
+        <div class="nav-logo-mark"><svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="5" fill="#fff"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.22 4.22l2.12 2.12M17.66 17.66l2.12 2.12M4.22 19.78l2.12-2.12M17.66 6.34l2.12-2.12" stroke="#fff" stroke-width="2" stroke-linecap="round"/></svg></div>
+        <span class="nav-logo-text">Remo<span>Energy</span></span>
+      </a>
+      <p class="footer-desc">Empowering Uganda with sustainable, reliable, and affordable renewable energy. Your lifetime energy partner since 2023.</p>
+      <div class="footer-links">
+        <a href="tel:256700601202">📞 +256 700 601 202</a>
+        <a href="mailto:info@remoenergy.co.ug">✉️ info@remoenergy.co.ug</a>
+        <a href="#contact">📍 Plot 153, Kira Road, Kampala</a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h5>Company</h5>
+      <ul>
+        <li><a href="#home">Home</a></li>
+        <li><a href="#about">About Us</a></li>
+        <li><a href="#why">Why Choose Us</a></li>
+        <li><a href="#safety">Safety</a></li>
+        <li><a href="#contact">Contact Us</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h5>Services</h5>
+      <ul>
+        <li><a href="#services">Solar Home Systems</a></li>
+        <li><a href="#services">PUE Systems</a></li>
+        <li><a href="#services">Commercial &amp; Industrial</a></li>
+        <li><a href="#services">Solar Water Pumping</a></li>
+        <li><a href="#services">Energy Backup</a></li>
+        <li><a href="#services">Street Lighting</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h5>Get Started</h5>
+      <ul>
+        <li><button class="footer-quote-btn">Free Quote</button></li>
+        <li><button class="footer-contact-btn">Send a Message</button></li>
+        <li><a href="tel:256700601202">Call Us Now</a></li>
+        <li><a href="mailto:info@remoenergy.co.ug">Email Us</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2026 <span>Remo Energy</span>. All Rights Reserved. Kampala, Uganda.</p>
+    <div class="footer-socials">
+      <a href="https://facebook.com" target="_blank" class="footer-social">f</a>
+      <a href="https://instagram.com" target="_blank" class="footer-social">ig</a>
+      <a href="https://linkedin.com" target="_blank" class="footer-social">in</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function() {
+  // ── Modal helpers ─────────────────────────────────────
+  function openModal(id) {
+    var el = document.getElementById(id);
+    if (el) { el.classList.add('open'); document.body.style.overflow = 'hidden'; }
+  }
+  function closeModal(id) {
+    var el = document.getElementById(id);
+    if (el) { el.classList.remove('open'); document.body.style.overflow = ''; }
+  }
+  function showSuccess(formId, successId) {
+    var f = document.getElementById(formId), s = document.getElementById(successId);
+    if (f) f.style.display = 'none';
+    if (s) s.style.display = 'block';
+  }
+  function resetForm(formId, successId) {
+    var f = document.getElementById(formId), s = document.getElementById(successId);
+    if (f) f.style.display = '';
+    if (s) s.style.display = 'none';
+  }
+
+  // ── Wire up ALL quote-opening buttons ────────────────
+  var quoteButtons = [
+    'navQuoteBtn','heroQuoteBtn','servicesQuoteBtn',
+    'svcCtaBtn','ctaBannerBtn','mobileQuoteBtn'
+  ];
+  quoteButtons.forEach(function(id) {
+    var el = document.getElementById(id);
+    if (el) el.addEventListener('click', function(e) { e.stopPropagation(); openModal('quoteModal'); });
+  });
+
+  // Contact-opening buttons
+  var contactButtons = ['aboutContactBtn','safetyContactBtn'];
+  contactButtons.forEach(function(id) {
+    var el = document.getElementById(id);
+    if (el) el.addEventListener('click', function(e) { e.stopPropagation(); openModal('contactModal'); });
+  });
+
+  // Footer buttons
+  document.querySelectorAll('.footer-quote-btn').forEach(function(btn) {
+    btn.addEventListener('click', function() { openModal('quoteModal'); });
+  });
+  document.querySelectorAll('.footer-contact-btn').forEach(function(btn) {
+    btn.addEventListener('click', function() { openModal('contactModal'); });
+  });
+
+  // ── Modal close buttons ───────────────────────────────
+  document.getElementById('closeQuoteModal').addEventListener('click', function() { closeModal('quoteModal'); });
+  document.getElementById('closeContactModal').addEventListener('click', function() { closeModal('contactModal'); });
+
+  // ── Form submit buttons ───────────────────────────────
+  document.getElementById('qSubmitBtn').addEventListener('click', function() { showSuccess('qFormWrap','qSuccess'); });
+  document.getElementById('cSubmitBtn').addEventListener('click', function() { showSuccess('cFormWrap','cSuccess'); });
+  document.getElementById('cpSubmitBtn').addEventListener('click', function() { showSuccess('cpFormWrap','cpSuccess'); });
+
+  // ── Form success close/reset ──────────────────────────
+  document.getElementById('qCloseSuccessBtn').addEventListener('click', function() { closeModal('quoteModal'); resetForm('qFormWrap','qSuccess'); });
+  document.getElementById('cCloseSuccessBtn').addEventListener('click', function() { closeModal('contactModal'); resetForm('cFormWrap','cSuccess'); });
+  document.getElementById('cpResetBtn').addEventListener('click', function() { resetForm('cpFormWrap','cpSuccess'); });
+
+  // ── Close modal clicking backdrop ────────────────────
+  document.querySelectorAll('.modal-overlay').forEach(function(overlay) {
+    overlay.addEventListener('click', function(e) {
+      if (e.target === overlay) closeModal(overlay.id);
+    });
+  });
+
+  // ── ESC key ───────────────────────────────────────────
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+      closeModal('quoteModal');
+      closeModal('contactModal');
+      closeMobileMenu();
+    }
+  });
+
+  // ── Mobile menu ───────────────────────────────────────
+  var menuOpen = false;
+  function openMobileMenu() {
+    menuOpen = true;
+    document.getElementById('mobileMenu').classList.add('open');
+    document.body.style.overflow = 'hidden';
+    var spans = document.querySelectorAll('#hamburgerBtn span');
+    spans[0].style.transform = 'rotate(45deg) translate(5px,5px)';
+    spans[1].style.opacity = '0';
+    spans[2].style.transform = 'rotate(-45deg) translate(5px,-5px)';
+  }
+  function closeMobileMenu() {
+    menuOpen = false;
+    document.getElementById('mobileMenu').classList.remove('open');
+    document.body.style.overflow = '';
+    var spans = document.querySelectorAll('#hamburgerBtn span');
+    spans[0].style.transform = '';
+    spans[1].style.opacity = '';
+    spans[2].style.transform = '';
+  }
+  document.getElementById('hamburgerBtn').addEventListener('click', function() {
+    if (menuOpen) closeMobileMenu(); else openMobileMenu();
+  });
+  document.querySelectorAll('.mm-link').forEach(function(a) {
+    a.addEventListener('click', function() { closeMobileMenu(); });
+  });
+
+  // ── Navbar scroll behaviour ───────────────────────────
+  var navTop = document.querySelector('.nav-top');
+  window.addEventListener('scroll', function() {
+    var scrolled = window.scrollY > 10;
+    if (scrolled) {
+      navTop.style.maxHeight = '0';
+      navTop.style.padding = '0 56px';
+      navTop.style.overflow = 'hidden';
+      navTop.style.opacity = '0';
+    } else {
+      navTop.style.maxHeight = '';
+      navTop.style.padding = '8px 56px';
+      navTop.style.overflow = '';
+      navTop.style.opacity = '1';
+    }
+    // Active nav link
+    var sections = ['home','about','services','safety','why','contact'];
+    var current = 'home';
+    sections.forEach(function(id) {
+      var el = document.getElementById(id);
+      if (el && window.scrollY >= el.offsetTop - 100) current = id;
+    });
+    document.querySelectorAll('.nav-links a').forEach(function(a) {
+      a.classList.toggle('active', a.getAttribute('href') === '#' + current);
+    });
+  });
+
+  // ── Hero scroll button ────────────────────────────────
+  document.getElementById('heroScrollBtn').addEventListener('click', function() {
+    document.getElementById('about').scrollIntoView({ behavior: 'smooth' });
+  });
+
+  // ── Fade-in on scroll ─────────────────────────────────
+  var io = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) entry.target.classList.add('visible');
+    });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.fade-in').forEach(function(el) { io.observe(el); });
+
+})();
+</script>
+</body>
+</html>
